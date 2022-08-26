@@ -10,9 +10,10 @@ serverSocket.listen(1)						# server starts to listen TCP solicitations
 print("Server is on!")
 
 while 1:
-	connectionSocket, addr = serverSocket.accept()		# server waits in .accept() to requisitions
-	message = serverSocket.recv(1500)
+	connectionSocket, clientIP = serverSocket.accept()		# server waits in .accept() to requisitions
+	message = connectionSocket.recv(1500)
 	decodedMessage = message.decode()
 	modifiedMessage = decodedMessage.upper()
 	encodedMessage = modifiedMessage.encode()
-	serverSocket.send(encodedMessage)					# sends converted (upper-case) sentence
+	connectionSocket.send(encodedMessage)					# sends converted (upper-case) sentence
+	print ("Message \"" + modifiedMessage + "\" sent successfully.")
