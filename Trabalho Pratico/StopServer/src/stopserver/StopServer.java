@@ -70,15 +70,16 @@ class Game {
         private void setup() throws IOException {
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream(), true);
-
+            output.println("WELCOME " + name);
+            
             if (this.name == '1') {
                 currentPlayer = this;
                 output.println("MESSAGE Aguardando um oponente conectar...");
             } else {
                 opponent = currentPlayer;
                 opponent.opponent = this;
-                output.println("START " + letter + "50" );
-                opponent.output.println("START " + letter + "50" );
+                output.println("START " + letter + " 50" );
+                opponent.output.println("START " + letter + " 50" );
             }
         }
 
@@ -92,7 +93,6 @@ class Game {
                     return;
                 } else if (command.startsWith("STOP")) {
                 	try {
-                		output.println("MY_STOP " + command.substring(5));
                     	opponent.output.println("OPPONENT_WORDS " + command.substring(5));
                     } catch (IllegalStateException e) {
                         output.println("MESSAGE " + e.getMessage());
@@ -100,8 +100,8 @@ class Game {
                 	
                 }else if(command.startsWith("POINTS")) {
                 	if(this.name=='1') {
-                		System.out.println(command.substring(7));
                 		p2points=Integer.parseInt(command.substring(7));
+                		
                 		if(p1points>=0) {
                 			if(p1points>p2points)
                 			{
@@ -120,7 +120,6 @@ class Game {
                 		} 
                 	}
                 	else {
-                		System.out.println(command.substring(7));
                 		p1points=Integer.parseInt(command.substring(7));
                 		if(p2points>=0) {
                 			if(p1points>p2points)

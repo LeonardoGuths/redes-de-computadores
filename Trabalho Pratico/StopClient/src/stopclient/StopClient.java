@@ -384,7 +384,7 @@ public class StopClient {
                 if (response.startsWith("START")) {
                     messageLabel.setText("O jogo começou!");
                     title.setTitle("Letra: [" + response.charAt(6) + "]");
-                    int tempo = (Integer.parseInt(response.substring(7)));
+                    int tempo = (Integer.parseInt(response.substring(8)));
                     
                     cronometro = new Cronometro(tempoRestante,tempo);
                     t = new Thread(cronometro);
@@ -408,21 +408,6 @@ public class StopClient {
                     }
                     
                 } else if (response.startsWith("OPPONENT_WORDS")) {
-                	
-                    happen.setText("Palavras do oponente:");
-                    messageLabel.setText(response.substring(15));
-                    cronometro.setStatus(false);
-                    pontosLabel.setVisible(true);
-                    pontosField.setVisible(true);
-                    pontosButton.setVisible(true);
-                    
-                    t.join();
-                    if (!apertei)
-                    	out.println("STOP " + Nome.getText() + " | " + Objeto.getText() + " | " + Cor.getText() + " | " + Animal.getText() + " | " + Cep.getText() + " | " + Comida.getText());
-                    
-                    
-                    
-                } else if (response.startsWith("MY_STOP")) {
                 	stop.setText("STOP!!!");
                 	stopped=true;
                 	tempoRestante.setText("--:--");
@@ -433,8 +418,18 @@ public class StopClient {
                 	Cep.setEnabled(false);
                 	Comida.setEnabled(false);
                 	stop.setEnabled(false);
+                    happen.setText("Palavras do oponente:");
+                    messageLabel.setText(response.substring(15));
+                    cronometro.setStatus(false);
+                    pontosLabel.setVisible(true);
+                    pontosField.setVisible(true);
+                    pontosButton.setVisible(true);
+                    t.join();
                     
-                } else if (response.startsWith("WINNER")) {
+                    if (!apertei)
+                    	out.println("STOP " + Nome.getText() + " | " + Objeto.getText() + " | " + Cor.getText() + " | " + Animal.getText() + " | " + Cep.getText() + " | " + Comida.getText());
+
+                }  else if (response.startsWith("WINNER")) {
                 	if (response.charAt(7) == '0')
                 		JOptionPane.showMessageDialog(frame, "EMPATE.");
                 	else if (response.charAt(7) == '1')
